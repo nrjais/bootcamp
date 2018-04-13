@@ -1,25 +1,32 @@
 package com.step.bootcamp;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class HomeAssistantTest {
+
+  private HomeAssistant homeAssistant;
+
+  @Before
+  public void setUp() {
+    homeAssistant = new HomeAssistant();
+  }
+
   @Test
   public void shouldTurnOnLight() {
-    Light mockLight = mock(Light.class);
-    HomeAssistant homeAssistant = new HomeAssistant();
-    homeAssistant.add("turn on", ()->mockLight.turnOn());
+    SquareLight mockSquareLight = mock(SquareLight.class);
+    homeAssistant.add("turn on", () -> mockSquareLight.turnOn());
     homeAssistant.listen("turn on");
-    verify(mockLight).turnOn();
+    verify(mockSquareLight).turnOn();
   }
 
   @Test
   public void shouldTurnOnHomeTheater() {
     HomeTheater mockTheater = mock(HomeTheater.class);
-    HomeAssistant homeAssistant = new HomeAssistant();
-    homeAssistant.add("music on", ()->mockTheater.on());
+    homeAssistant.add("music on", () -> mockTheater.on());
     homeAssistant.listen("music on");
     verify(mockTheater).on();
   }
@@ -27,10 +34,8 @@ public class HomeAssistantTest {
   @Test
   public void shouldBeAbleToAddMultipleInstructionsInHomeTheater() {
     HomeTheater mockTheater = mock(HomeTheater.class);
-    HomeAssistant homeAssistant = new HomeAssistant()
-        .add("music off", () -> mockTheater.off())
-        .add("Play Music", ()->mockTheater.play());
-
+    homeAssistant.add("music off", () -> mockTheater.off())
+        .add("Play Music", () -> mockTheater.play());
     homeAssistant.listen("music off");
     homeAssistant.listen("Play Music");
     verify(mockTheater).play();

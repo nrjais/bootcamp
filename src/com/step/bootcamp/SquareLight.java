@@ -1,6 +1,6 @@
 package com.step.bootcamp;
 
-public class Light {
+public class SquareLight {
   public boolean turnOff() {
     return true;
   }
