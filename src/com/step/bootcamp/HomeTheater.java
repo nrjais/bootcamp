@@ -1,15 +1,15 @@
 package com.step.bootcamp;
 
 public class HomeTheater {
-  public boolean on() {
-    return true;
-  }
+  public void on() {}
 
-  public boolean off() {
-    return true;
-  }
+  public void off() {}
 
-  public boolean play() {
-    return true;
-  }
+  public void play() {}
+
+  public void volumeUp() {}
+
+  public void volumeDown() {}
+
+  public void volumeUp(int volume) {}
 }
