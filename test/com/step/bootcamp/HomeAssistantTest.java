@@ -9,55 +9,31 @@ public class HomeAssistantTest {
   @Test
   public void shouldTurnOnLight() {
     Light mockLight = mock(Light.class);
-    HomeAssistant homeAssistant = new HomeAssistant().add(mockLight);
+    HomeAssistant homeAssistant = new HomeAssistant();
+    homeAssistant.add("turn on", ()->mockLight.turnOn());
     homeAssistant.listen("turn on");
     verify(mockLight).turnOn();
   }
 
   @Test
-  public void shouldTurnOffLight() {
-    Light mockLight = mock(Light.class);
-    HomeAssistant homeAssistant = new HomeAssistant().add(mockLight);
-    homeAssistant.listen("turn off");
-    verify(mockLight).turnOff();
-  }
-
-  @Test
-  public void shouldTurnOffCircularLight() {
-    CircularLight mockLight = mock(CircularLight.class);
-    HomeAssistant homeAssistant = new HomeAssistant().add(mockLight);
-    homeAssistant.listen("circular light off");
-    verify(mockLight).switchOff();
-  }
-  @Test
-  public void shouldTurnOnCircularLight() {
-    CircularLight mockLight = mock(CircularLight.class);
-    HomeAssistant homeAssistant = new HomeAssistant().add(mockLight);
-    homeAssistant.listen("circular light on");
-    verify(mockLight).switchOn();
-  }
-
-  @Test
   public void shouldTurnOnHomeTheater() {
     HomeTheater mockTheater = mock(HomeTheater.class);
-    HomeAssistant homeAssistant = new HomeAssistant().add(mockTheater);
+    HomeAssistant homeAssistant = new HomeAssistant();
+    homeAssistant.add("music on", ()->mockTheater.on());
     homeAssistant.listen("music on");
     verify(mockTheater).on();
   }
 
   @Test
-  public void shouldTurnOffHomeTheater() {
+  public void shouldBeAbleToAddMultipleInstructionsInHomeTheater() {
     HomeTheater mockTheater = mock(HomeTheater.class);
-    HomeAssistant homeAssistant = new HomeAssistant().add(mockTheater);
-    homeAssistant.listen("music off");
-    verify(mockTheater).off();
-  }
+    HomeAssistant homeAssistant = new HomeAssistant()
+        .add("music off", () -> mockTheater.off())
+        .add("Play Music", ()->mockTheater.play());
 
-  @Test
-  public void shouldPlayMusic() {
-    HomeTheater mockTheater = mock(HomeTheater.class);
-    HomeAssistant homeAssistant = new HomeAssistant().add(mockTheater);
+    homeAssistant.listen("music off");
     homeAssistant.listen("Play Music");
     verify(mockTheater).play();
+    verify(mockTheater).off();
   }
 }

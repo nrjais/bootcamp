@@ -1,5 +1,5 @@
 package com.step.bootcamp;
 
-public interface Action {
+public interface Command {
   void execute();
 }
